@@ -34,30 +34,26 @@ class node():
         self.current = current
         self.parent = parent
 
+#defining obstacles as well as the boundaries of the map
+def obstacles(st):
+    if st[1] > (90) and st[1] < 110 and st[0] > (40) and st[0] < (60):
 
-def obstacles(st, go):
-    if st[0] > 90 and st[0] < 110 and st[1] > 40 and st[1] < 60:
-        st = []
-        go = []
-        print(start coordinate is in obstacle space)
-        return st ,go
-    elif go[0] > 90 and go[0] < 110 and go[1] > 40 and go[1] < 60:
-        st = []
-        go = []
-        print(goal coordinate is in obstacle space)
-        return st ,go
-    elif ((st[0] - 160)**2 + (st[1] - 50)**2) < 225:
-        st = []
-        go = []
-        print(start coordinate is in obstacle space)
-        return st ,go
-    elif ((go[0] - 160)**2 + (go[1] - 50)**2) < 225:
-        st = []
-        go = []
-        print(goal coordinate is in obstacle space)
-        return st ,go
+        print("coordinate is in obstacle space")
+        return None
+    elif ((st[1] - (160))**2 + (st[0] - (50))**2) < 225:
+
+        print("coordinate is in obstacle space")
+        return None
+    elif st[1] < 0 or st[1] > canvas_size[1]:
+
+        print("coordinate is out of the map boundary")
+        return None
+    elif st[0] < 0 or st[0] > canvas_size[0]:
+
+        print("coordinate is out of the map boundary")
+        return None
     else :
-        return st ,go
+        return st
 
 #removes from the queue
 def removing_from_queue():
@@ -66,73 +62,84 @@ def removing_from_queue():
 
 
 
-
-
-
-
-#this function performs actions and gets children and calls the locate_0 function as well
+#this function performs actions and gets children
 def super_move_function(currentnode):
 
     def moveleft(node1):
         child = node1.copy()
-        child =
+        child[1] = child[1] - 1
 
         #print(currentnode)
         return child
 
     def moveright(node1):
         child = node1.copy()
-
+        child[1] = child[1] + 1
         return child
 
     def moveup(node1):
         child = node1.copy()
-
+        child[0] = child[0] + 1
         return child
 
     def movedown(node1):
         child = node1.copy()
-
+        child[0] = child[0] - 1
         return child
 
     def up_left(node1):
         child = node1.copy()
-
+        child[0] = child[0] + 1
+        child[1] = child[1] - 1
         return child
 
     def down_left(node1):
         child = node1.copy()
-
+        child[0] = child[0] - 1
+        child[1] = child[1] - 1
         return child
 
 
     def up_right(node1):
         child = node1.copy()
-
+        child[0] = child[0] + 1
+        child[1] = child[1] + 1
         return child
 
     def down_right(node1):
         child = node1.copy()
-
+        child[0] = child[0] - 1
+        child[1] = child[1] + 1
         return child
 
 
 
-    #node =
     new_child = list()
-    
-    new_child.append(moveleft(currentnode))
-    new_child.append(moveright(currentnode))
-    new_child.append(moveup(currentnode))
-    new_child.append(movedown(currentnode))
-    new_child.append(up_left(currentnode))
-    new_child.append(down_left(currentnode))
-    new_child.append(up_right(currentnode))
-    new_child.append(down_right(currentnode))
+    node = currentnode.current
+    new_child.append(moveleft(node))
+    new_child.append(moveright(node))
+    new_child.append(moveup(node))
+    new_child.append(movedown(node))
+    new_child.append(up_left(node))
+    new_child.append(down_left(node))
+    new_child.append(up_right(node))
+    new_child.append(down_right(node))
 
     return new_child, node
 
+#checking if the node is in obstacle space
+def check_if_in_obstacle_space(children, parent):
+    valid_children = list()
+    for i in children:
+        poss = obstacles(i)
+        if poss != None:
+            valid_children.append(i)
 
+    return valid_children, parent
+
+
+###############################
+#####check if the new node is there in the queue
 #checking if the node has been visited previously and then appending to the visited_list
 def check_if_visited(check):
     for i in range(len(visited_list)):
@@ -151,26 +158,34 @@ def check_if_visited(check):
 
 
 
-
-canvas = np.ones((100,200))
-start = list()
-goal = list()
+canvas_size = [100,200]
+canvas = np.ones((canvas_size[0],canvas_size[1]))
+visited_list = []
 n = 1
 while n > 0:           #if the coordinate is in obstacle space display a message and ask again for coordinates
+    start = list()
+    goal = list()
     x1 = input("Enter the x co-ordinate of the start point: ")
     y1 = input("Enter the y co-ordinate of the start point: ")
     x2 = input("Enter the x co-ordinate of the goal point: ")
     y2 = input("Enter the y co-ordinate of the goal point: ")
-    start.append(int(x1))
     start.append(int(y1))
-    goal.append(int(x2))
+    start.append(int(x1))
     goal.append(int(y2))
-    start, goal = obstacles(start, goal)
-    if start != []:
+    goal.append(int(x2))
+    lis = [start, goal]
+    strt = list()
+    count = 0
+    for i in lis:
+        strt.append(obstacles(i))
+    print(strt)
+    if strt[0] == None or strt[1] == None:
+        continue
+    else:
         n = 0
 
 first_node = node(start, None)
 
-print(start)
+print(start,goal)
 cv2.imshow("canvas",canvas)    #dimensions of the canvas
 cv2.waitKey(0)

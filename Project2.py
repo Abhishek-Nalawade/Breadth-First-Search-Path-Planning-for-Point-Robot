@@ -45,11 +45,11 @@ def obstacles(st):
 
         #print("coordinate is in obstacle space")
         return None
-    elif st[1] < 0 or st[1] > canvas_size[1]:
+    elif st[1] < 0 or st[1] >= canvas_size[1]:
 
         #print("coordinate is out of the map boundary")
         return None
-    elif st[0] < 0 or st[0] > canvas_size[0]:
+    elif st[0] < 0 or st[0] >= canvas_size[0]:
 
         #print("coordinate is out of the map boundary")
         return None
@@ -290,3 +290,4 @@ out.release()
 
 cv2.imshow("canvas",canvas)    #dimensions of the canvas
 cv2.waitKey(0)
+cv2.destroyAllWindows()

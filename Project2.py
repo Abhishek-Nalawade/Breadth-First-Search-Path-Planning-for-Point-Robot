@@ -39,19 +39,19 @@ class node():
 def obstacles(st):
     if st[1] > (90) and st[1] < 110 and st[0] > (40) and st[0] < (60):
 
-        print("coordinate is in obstacle space")
+        #print("coordinate is in obstacle space")
         return None
     elif ((st[1] - (160))**2 + (st[0] - (50))**2) < 225:
 
-        print("coordinate is in obstacle space")
+        #print("coordinate is in obstacle space")
         return None
     elif st[1] < 0 or st[1] > canvas_size[1]:
 
-        print("coordinate is out of the map boundary")
+        #print("coordinate is out of the map boundary")
         return None
     elif st[0] < 0 or st[0] > canvas_size[0]:
 
-        print("coordinate is out of the map boundary")
+        #print("coordinate is out of the map boundary")
         return None
     else :
         return st
@@ -60,7 +60,8 @@ def obstacles(st):
 def removing_from_queue():
     check = queue1.remove()
     visited_list.append(check)
-    print("queue size ",queue1.size())
+    for_frames.append(visited_list)
+    #print("queue size ",queue1.size())
     return check
 
 
@@ -189,12 +190,14 @@ def check_if_visited_or_in_queue(valid_children, parent):
 #compares new children with goal state and adds them to the queue
 def compare_with_goal(ultimate_children, parent):
     for child in ultimate_children:
-            if child == goal:
-                print("\n Goal has been reached \n")
-                return child, parent
-            else:
-                queue1.add(node(child, parent))
-                return None
+
+        if child == goal:
+            print("\n Goal has been reached \n")
+            return child, parent
+        else:
+            queue1.add(node(child, parent))
+    #print("size of queue in goal ", queue1.size())
+    return None
 
 
 
@@ -202,7 +205,8 @@ def compare_with_goal(ultimate_children, parent):
 
 canvas_size = [100,200]
 canvas = np.ones((canvas_size[0],canvas_size[1]))
-visited_list = []
+visited_list = list()
+for_frames = list()
 
 n = 1
 while n > 0:           #if the coordinate is in obstacle space display a message and ask again for coordinates
@@ -245,3 +249,28 @@ while True:
     child_parent = compare_with_goal(ultimate_child, parent2)
     if child_parent is not None:
         break
+
+print(child_parent)
+print(len(visited_list))
+
+parent_info = child_parent[1]
+
+route = list()
+while parent_info is not None:
+    for i in range(len(visited_list)):
+        if parent_info == visited_list[i].current:
+            parent_info = visited_list[i].parent
+            route.append(i)
+            break
+#print(route)
+
+for i in route:
+    print(visited_list[i].current)
+
+sum = list()
+for i in range(len(visited_list)):
+    sum = sum + i
+    
+for i in for_frames:
+    for j in i:
+        canvas[]

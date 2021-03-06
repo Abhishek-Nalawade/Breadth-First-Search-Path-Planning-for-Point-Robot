@@ -238,8 +238,6 @@ print(queue1.pending[0].current)
 print(start,goal)
 print(first_node.current)
 #print("it is this ",queue1.size())
-cv2.imshow("canvas",canvas)    #dimensions of the canvas
-cv2.waitKey(0)
 
 while True:
     new_node = removing_from_queue()
@@ -264,13 +262,31 @@ while parent_info is not None:
             break
 #print(route)
 
-for i in route:
-    print(visited_list[i].current)
+'''for i in route:
+    print(visited_list[i].current)'''
+
+for i in visited_list:
+    print(i.current)
+
+'''sum = [[1,5]]
+sum = sum + [visited_list[1].current]
+print("sum ",sum)'''
+fourcc = cv2.VideoWriter_fourcc(*'XVID')     #XVID
+out = cv2.VideoWriter('hw4_3.avi', fourcc, 5, (200, 100))
 
 sum = list()
 for i in range(len(visited_list)):
-    sum = sum + i
-    
-for i in for_frames:
+    sum = sum + [visited_list[i].current]
+    for j in sum:
+        canvas[j[0]][j[1]] = 0
+    out.write(canvas)
+    cv2.imshow("canvas1",canvas)
+    cv2.waitKey(1)
+out.release()
+#print(sum)
+'''for i in for_frames:
     for j in i:
-        canvas[]
+        canvas[]'''
+
+cv2.imshow("canvas",canvas)    #dimensions of the canvas
+cv2.waitKey(0)

@@ -37,14 +37,21 @@ class node():
 
 #defining obstacles as well as the boundaries of the map
 def obstacles(st):
-    if st[1] >= (90) and st[1] <= 110 and st[0] >= (40) and st[0] <= (60):
+    if ((st[1] - 90)**2 + (st[0] - 70)**2) <= 1225:
+
+        print("coordinate is in circle")
+        return None
+
+    elif
+
+    '''if st[1] >= (90) and st[1] <= 110 and st[0] >= (40) and st[0] <= (60):
 
         #print("coordinate is in obstacle space")
         return None
     elif ((st[1] - (160))**2 + (st[0] - (50))**2) <= 225:
 
         #print("coordinate is in obstacle space")
-        return None
+        return None'''
     elif st[1] < 0 or st[1] >= canvas_size[1]:
 
         #print("coordinate is out of the map boundary")
@@ -291,7 +298,7 @@ out.release()
     for j in i:
         canvas[]'''
 for i in route:
-    print("route ",visited_list[i].current)
+    #print("route ",visited_list[i].current)
     canvas[(canvas_size[0]-1) - visited_list[i].current[0]][visited_list[i].current[1]] = 1
 cv2.imshow("canvas1",canvas)
 cv2.waitKey(1)    #dimensions of the canvas

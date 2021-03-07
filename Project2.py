@@ -37,11 +37,11 @@ class node():
 
 #defining obstacles as well as the boundaries of the map
 def obstacles(st):
-    if st[1] > (90) and st[1] < 110 and st[0] > (40) and st[0] < (60):
+    if st[1] >= (90) and st[1] <= 110 and st[0] >= (40) and st[0] <= (60):
 
         #print("coordinate is in obstacle space")
         return None
-    elif ((st[1] - (160))**2 + (st[0] - (50))**2) < 225:
+    elif ((st[1] - (160))**2 + (st[0] - (50))**2) <= 225:
 
         #print("coordinate is in obstacle space")
         return None
@@ -120,6 +120,8 @@ def super_move_function(currentnode):
 
     new_child = list()
     node = currentnode.current
+
+
     new_child.append(moveleft(node))
     new_child.append(moveright(node))
     new_child.append(moveup(node))
@@ -203,7 +205,7 @@ def compare_with_goal(ultimate_children, parent):
 
 
 
-canvas_size = [100,200]
+canvas_size = [300,400]
 canvas = np.ones((canvas_size[0],canvas_size[1]))
 visited_list = list()
 for_frames = list()
@@ -265,8 +267,8 @@ while parent_info is not None:
 '''for i in route:
     print(visited_list[i].current)'''
 
-for i in visited_list:
-    print(i.current)
+#for i in visited_list:
+#    print(i.current)
 
 '''sum = [[1,5]]
 sum = sum + [visited_list[1].current]
@@ -278,16 +280,20 @@ sum = list()
 for i in range(len(visited_list)):
     sum = sum + [visited_list[i].current]
     for j in sum:
-        canvas[j[0]][j[1]] = 0
+        canvas[(canvas_size[0]-1) - j[0]][j[1]] = 0
     out.write(canvas)
     cv2.imshow("canvas1",canvas)
     cv2.waitKey(1)
+
 out.release()
 #print(sum)
 '''for i in for_frames:
     for j in i:
         canvas[]'''
-
-cv2.imshow("canvas",canvas)    #dimensions of the canvas
+for i in route:
+    print("route ",visited_list[i].current)
+    canvas[(canvas_size[0]-1) - visited_list[i].current[0]][visited_list[i].current[1]] = 1
+cv2.imshow("canvas1",canvas)
+cv2.waitKey(1)    #dimensions of the canvas
 cv2.waitKey(0)
 cv2.destroyAllWindows()

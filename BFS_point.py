@@ -300,7 +300,7 @@ for i in range(canvas_size[0]):
     for j in range(canvas_size[1]):
         obstacles([i,j])
 
-out = cv2.VideoWriter('Exploration.avi',cv2.VideoWriter_fourcc('M','J','P','G'), 60, (400,300))
+out = cv2.VideoWriter('Exploration.mp4',cv2.VideoWriter_fourcc(*'mp4v'), 60, (400,300))
 
 #visualization of the exploration of nodes
 print("Video is saving....")
@@ -322,6 +322,7 @@ for i in route:
     canvas[(canvas_size[0]-1) - visited_list[i].current[0]][visited_list[i].current[1]][0] = 0
     canvas[(canvas_size[0]-1) - visited_list[i].current[0]][visited_list[i].current[1]][1] = 255
     canvas[(canvas_size[0]-1) - visited_list[i].current[0]][visited_list[i].current[1]][2] = 255
+    cv2.circle(canvas, (visited_list[i].current[1], (canvas_size[0]-1) - visited_list[i].current[0]), 1, (0,255,255), -1)
     out.write(canvas)
     cv2.imshow("canvas1",canvas)
     cv2.waitKey(1)

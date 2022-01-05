@@ -17,3 +17,7 @@ live visualization takes more time.
 2) Only the path from the start point to the goal point is highlighted and the goal node is not highlighted.
 
 This code is tested on a machine with 32gb ram.
+
+Result:
+
+![result](results/bfs.gif)
